@@ -11,13 +11,14 @@ from .config import Config
 
 def create_app():
     app = Flask(__name__)
-    print(Config.connect_str)
     app.config.from_object(Config)
 
     db.init_app(app)
 
     with app.app_context():
-        from .routes import unix_values
+        from .routes import unix_values, underlying_candles, option_candles
         app.register_blueprint(unix_values)
+        app.register_blueprint(underlying_candles)
+        app.register_blueprint(option_candles)
 
     return app
