@@ -47,7 +47,7 @@ class UnderlyingCandles(db.Model):
 
 class OptionCandles(db.Model):
     __tablename__ = 'OptionCandles'
-    candleid = db.Column(db.Integer, primary_key=True)
+    candleid = db.Column(db.Integer, primary_key=True, nullable=False)
     reqid = db.Column(db.Integer, nullable=False)
     date = db.Column(db.String, nullable=False)
     time = db.Column(db.Integer, nullable=False)
@@ -82,14 +82,53 @@ class OptionCandles(db.Model):
             'Volume': self.volume,
             'TimeFrame': get_tag_string(self.timeframe),
             'OptionType': get_tag_string(self.optiontype),
-            'TimeOfDay': self.timeofday,
-            'RelativeToMoney': self.relativetomoney,
-            'VolumeStDev': self.volumestdev,
-            'VolumeThreshold': self.volumethreshold,
-            'OptPriceDelta': self.optpricedelta,
-            'DailyHighLow': self.dailyhighlow,
-            'LocalHighLow': self.localhighlow,
-            'UnderlyingPriceDelta': self.underlyingpricedelta,
-            'UnderlyingDailyHighLow': self.underlyingdailyhighlow,
-            'UnderlyingLocalHighLow': self.underlyinglocalhighlow
+            'TimeOfDay': get_tag_string(self.timeofday),
+            'RelativeToMoney': get_tag_string(self.relativetomoney),
+            'VolumeStDev': get_tag_string(self.volumestdev),
+            'VolumeThreshold': get_tag_string(self.volumethreshold),
+            'OptPriceDelta': get_tag_string(self.optpricedelta),
+            'DailyHighLow': get_tag_string(self.dailyhighlow),
+            'LocalHighLow': get_tag_string(self.localhighlow),
+            'UnderlyingPriceDelta': get_tag_string(self.underlyingpricedelta),
+            'UnderlyingDailyHighLow': get_tag_string(self.underlyingdailyhighlow),
+            'UnderlyingLocalHighLow': get_tag_string(self.underlyinglocalhighlow)
         }
+
+class CandlePerformance(db.Model):
+    __tablename__ = 'CandlePerformance'
+    performanceid = db.Column(db.Integer, primary_key=True, nullable=False)
+    candleid = db.Column(db.Integer, db.ForeignKey('OptionCandles.CandleID'), nullable=False)
+    percentwin = db.Column(db.Float, nullable=False)
+    winloss = db.Column(db.Float, nullable=False)
+    timetowin = db.Column(db.Integer, nullable=False)
+
+def option_candle_performance_data(option_candle, candle_performance):
+    return {
+        # Option Candle Columns
+        'CandleID': option_candle.candleid,
+        'ReqID': option_candle.reqid,
+        'Date': option_candle.date,
+        'Time': option_candle.time,
+        'Open': option_candle.open,
+        'Close': option_candle.close,
+        'High': option_candle.high,
+        'Low': option_candle.low,
+        'Volume': option_candle.volume,
+        'TimeFrame': get_tag_string(option_candle.timeframe),
+        'OptionType': get_tag_string(option_candle.optiontype),
+        'TimeOfDay': get_tag_string(option_candle.timeofday),
+        'RelativeToMoney': get_tag_string(option_candle.relativetomoney),
+        'VolumeStDev': get_tag_string(option_candle.volumestdev),
+        'VolumeThreshold': get_tag_string(option_candle.volumethreshold),
+        'OptPriceDelta': get_tag_string(option_candle.optpricedelta),
+        'DailyHighLow': get_tag_string(option_candle.dailyhighlow),
+        'LocalHighLow': get_tag_string(option_candle.localhighlow),
+        'UnderlyingPriceDelta': get_tag_string(option_candle.underlyingpricedelta),
+        'UnderlyingDailyHighLow': get_tag_string(option_candle.underlyingdailyhighlow),
+        'UnderlyingLocalHighLow': get_tag_string(option_candle.underlyinglocalhighlow),
+
+        # Candle Performance Columns
+        'PercentWin': candle_performance.percentwin,
+        'WinLoss': candle_performance.winloss,
+        'TimeToWin': candle_performance.timetowin
+    }

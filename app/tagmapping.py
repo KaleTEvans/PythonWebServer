@@ -7,8 +7,6 @@ TAG_MAP = {
     '30sec': 4,
     '1min': 5,
     '5min': 6,
-    '30min': 53,
-    '1hr': 54,
 
     'AtTheMoney': 7,
     '1StrikeOTM': 8,
@@ -34,7 +32,7 @@ TAG_MAP = {
     'VolumeOver2_StandardDeviations': 26,
     'VolumeOver3_StandardDeviations': 27,
     'VolumeOver4_StandardDeviations': 28,
-    'VolumeUnder1_StandardDeviation': 29,
+    'VolumeUnder1_StandardDeviations': 29,
 
     'VolumeOver100': 30,
     'VolumeOver250': 31,
@@ -47,7 +45,43 @@ TAG_MAP = {
     'Over2_UnderlyingPriceStdDevs': 37,
     'Under1_OptionPriceStdDevs': 38,
     'Under2_OptionPriceStdDevs': 39,
-    'Over2_OptionPriceStdDevs': 40 
+    'Over2_OptionPriceStdDevs': 40,
+
+    'UnderlyingNearDailyLow': 41,
+    'UnderlyingNearDailyHigh': 42,
+    'UnderlyingInsideDailyRange': 43,
+    'OptionNearDailyLow': 44,
+    'OptionNearDailyHigh': 45,
+    'OptionInsideDailyRange': 46,
+
+    'UnderlyingNearLocalLow': 47,
+    'UnderlyingNearLocalHigh': 48,
+    'UnderlyingInsideLocalRange': 49,
+    'OptionNearLocalLow': 50,
+    'OptionNearLocalHigh': 51,
+    'OptionInsideLocalRange': 52,
+
+    '30min': 53,
+    '1hr': 54,
+
+    'OptionVolumeIncreasing': 55,
+    'OptionVolumeSustainedIncrease': 56,
+    'OptionVolumeDecreasing': 57,
+    'OptionVolumeInsignificant': 58,
+
+    'OptionPriceIncreasing': 59,
+    'OptionPriceSustainedIncrease': 60,
+    'OptionPriceDecreasing': 61,
+    'OptionPriceSustainedDecrease': 62,
+    'OptionPriceInsignificant': 63,
+
+    'BullishIntradayTrend': 64,
+    'BearishIntradayTrend': 65,
+    'SidewaysIntradayTrend': 66,
+
+    'BullishDailyTrend': 67,
+    'BearishDailyTrend': 68,
+    'SidewaysDailyTrend': 69
 }
 
 REVERSE_TAG_MAPPING = {v: k for k, v in TAG_MAP.items()}
@@ -58,113 +92,3 @@ def get_tag_string(tag_int):
     if tag_int not in tag_cache:
         tag_cache[tag_int] = REVERSE_TAG_MAPPING.get(tag_int, "Unknown")
     return tag_cache[tag_int]
-
-# int tag_to_db_key(PriceDelta val, TagCategory tc) {
-#     if (tc == TagCategory::UnderlyingPriceDelta) {
-#         switch (val)
-#         {
-#         case PriceDelta::Under1: return 35;
-#         case PriceDelta::Under2: return 36;
-#         case PriceDelta::Over2: return 37;
-#         default: return 0;
-#         }
-#     } else if (tc == TagCategory::OptionPriceDelta) {
-#         switch (val)
-#         {
-#         case PriceDelta::Under1: return 38;
-#         case PriceDelta::Under2: return 39;
-#         case PriceDelta::Over2: return 40;
-#         default: return 0;
-#         }
-#     } else {
-#         std::cout << "Enum Error: Invalid TagCategory and PriceDelta" << std::endl;
-#         return 0;
-#     }
-# }
-
-# int tag_to_db_key(DailyHighsAndLows val, TagCategory tc) {
-#     if (tc == TagCategory::UnderlyingDailyHighsAndLows) {
-#         switch (val)
-#         {
-#         case DailyHighsAndLows::NDL: return 41;
-#         case DailyHighsAndLows::NDH: return 42;
-#         case DailyHighsAndLows::Inside: return 43;
-#         default: return 0;
-#         }
-#     } else if (tc == TagCategory::OptionDailyHighsAndLows) {
-#          switch (val)
-#         {
-#         case DailyHighsAndLows::NDL: return 44;
-#         case DailyHighsAndLows::NDH: return 45;
-#         case DailyHighsAndLows::Inside: return 46;
-#         default: return 0;
-#         }
-#     } else {
-#         std::cout << "Enum Error: Invalid TagCategory and DHL" << std::endl;
-#         return 0;
-#     }
-# }
-
-# int tag_to_db_key(LocalHighsAndLows val, TagCategory tc) {
-#     if (tc == TagCategory::UnderlyingLocalHighsAndLows) {
-#         switch (val)
-#         {
-#         case LocalHighsAndLows::NLL: return 47;
-#         case LocalHighsAndLows::NLH: return 48;
-#         case LocalHighsAndLows::Inside: return 49;
-#         default: return 0;
-#         }
-#     } else if (tc == TagCategory::OptionLocalHighsAndLows) {
-#         switch (val)
-#         {
-#         case LocalHighsAndLows::NLL: return 50;
-#         case LocalHighsAndLows::NLH: return 51;
-#         case LocalHighsAndLows::Inside: return 52;
-#         default: return 0;
-#         }
-#     } else {
-#         std::cout << "Enum Error: Invalid TagCategory and LHL" << std::endl;
-#         return 0;
-#     }
-# }
-
-# int tag_to_db_key(VolumeROC val) {
-#     switch (val)
-#     {
-#     case VolumeROC::VolumeIncrease: return 55;
-#     case VolumeROC::HighVolumeIncrease: return 56;
-#     case VolumeROC::VolumeDecrease: return 57;
-#     default: return 0;
-#     }
-# }
-
-# int tag_to_db_key(PriceROC val) {
-#     switch (val)
-#     {
-#     case PriceROC::PriceIncrease: return 58;
-#     case PriceROC::HighPriceIncrease: return 59;
-#     case PriceROC::PriceDecrease: return 60;
-#     case PriceROC::HighPriceDecrease: return 61;
-#     default: return 0;
-#     }
-# }
-
-# int tag_to_db_key(TrendingDirectionIntraday val) {
-#     switch (val)
-#     {
-#     case TrendingDirectionIntraday::Bullish: return 62;
-#     case TrendingDirectionIntraday::Bearish: return 63;
-#     case TrendingDirectionIntraday::Sideways: return 64;
-#     default: return 0;
-#     }
-# }
-
-# int tag_to_db_key(TrendingDirectionDaily val) {
-#     switch (val)
-#     {
-#     case TrendingDirectionDaily::Bullish: return 65;
-#     case TrendingDirectionDaily::Bearish: return 66;
-#     case TrendingDirectionDaily::Sideways: return 67;
-#     default: return 0;
-#     }
-# }
