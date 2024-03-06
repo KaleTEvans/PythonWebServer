@@ -94,6 +94,21 @@ class OptionCandles(db.Model):
             'UnderlyingLocalHighLow': get_tag_string(self.underlyinglocalhighlow)
         }
 
+    @classmethod
+    def string_to_category(self, category):
+        if category == 'TimeFrame': return self.timeframe
+        if category == 'OptionType': return self.optiontype
+        if category == 'TimeOfDay': return self.timeofday
+        if category == 'RelativeToMoney': return self.relativetomoney
+        if category == 'VolumeStDev': return self.volumestdev
+        if category == 'VolumeThreshold': return self.volumethreshold
+        if category == 'OptPriceDelta': return self.optpricedelta
+        if category == 'DailyHighLow': return self.dailyhighlow
+        if category == 'LocalHighLow': return self.localhighlow
+        if category == 'UnderlyingPriceDelta': return self.underlyingpricedelta
+        if category == 'UnderlyingDailyHighLow': return self.underlyingdailyhighlow
+        if category == 'UnderlyingLocalHighLow': return self.underlyinglocalhighlow
+
 class CandlePerformance(db.Model):
     __tablename__ = 'CandlePerformance'
     performanceid = db.Column(db.Integer, primary_key=True, nullable=False)

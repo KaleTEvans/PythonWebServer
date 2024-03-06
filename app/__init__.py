@@ -16,7 +16,8 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
-        from .routes import unix_values, underlying_candles, option_candles
+        from .routes import home_page, unix_values, underlying_candles, option_candles
+        app.register_blueprint(home_page)
         app.register_blueprint(unix_values)
         app.register_blueprint(underlying_candles)
         app.register_blueprint(option_candles)
